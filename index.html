@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ShopTrendy - Ecommerce</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <!-- Add Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>ShopTrendy</h1>
+            <nav>
+                <a onclick="showSection('home')" class="nav-link active">Home</a>
+                <a onclick="showSection('login')" class="nav-link">Login</a>
+                <a onclick="showSection('products')" class="nav-link">Products</a>
+                <a onclick="showSection('cart')" class="nav-link">Cart</a>
+                <a onclick="showSection('wishlist')" class="nav-link">Wishlist</a>
+                <a onclick="showSection('history')" class="nav-link">History</a>
+                <a onclick="logout()" class="nav-link logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2 class="animate__animated animate__fadeInDown">Welcome  to  ShopTrendy!</h2>
+                <p class="animate__animated animate__fadeInUp animate__delay-1s">Discover amazing products. Register, login, or shop as a guest.</p>
+                <button class="cta-button animate__animated animate__zoomIn animate__delay-2s" onclick="showSection('products')">Explore Products</button>
+                <!-- Optional decorative shapes -->
+                <div class="hero-shapes">
+                    <div class="shape shape-1"></div>
+                    <div class="shape shape-2"></div>
+                    <div class="shape shape-3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Rest of your sections (login, products, cart, wishlist, history) remain unchanged -->
+        <section id="login" class="section">
+            <div class="form-container" id="authFormContainer">
+                <h2>Login</h2>
+                <form id="loginForm">
+                    <input type="email" id="loginEmail" placeholder="Email" required>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <select id="loginRole" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                <div id="loginMessage" class="message"></div>
+                <div class="new-user">
+                    New user? <a href="#signup" onclick="showSignUp(event)" class="signup-link">Sign Up</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="products" class="section">
+            <h2>Products</h2>
+            <div class="filter-container">
+                <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+                <select id="categoryFilter" onchange="searchProducts()">
+                    <option value="All">All Categories</option>
+                </select>
+            </div>
+            <div id="productsList" class="products-grid"></div>
+        </section>
+
+        <section id="cart" class="section">
+            <h2>Your Cart</h2>
+            <div id="cartList" class="cart-grid"></div>
+            <div id="cartTotal" class="cart-total">
+                <p>Available Credits: <span id="availableCredits">0</span> (₹<span id="creditValue">0</span>)</p>
+                <label><input type="checkbox" id="useCredits" onchange="updateTotalWithCredits()"> Use Credits</label>
+                <h3>Total Price: ₹<span id="totalPrice">0</span></h3>
+                <p id="creditDiscount" style="display: none;">Credit Discount: ₹<span id="discountAmount">0</span></p>
+                <h3 id="finalTotal" style="display: none;">Final Amount: ₹<span id="finalPrice">0</span></h3>
+            </div>
+            <button onclick="placeOrder()" class="btn">Place Order</button>
+            <div id="billSection" class="bill-section" style="display: none;">
+                <h3>Your Bill</h3>
+                <div id="billDetails"></div>
+                <p>Credits Earned: <span id="creditsEarned">0</span></p>
+                <button onclick="printBill()" class="btn">Print Bill</button>
+            </div>
+        </section>
+
+        <section id="wishlist" class="section">
+            <h2>Your Wishlist</h2>
+            <div id="wishlistList" class="wishlist-grid"></div>
+        </section>
+
+        <section id="history" class="section">
+            <h2>Order History</h2>
+            <div id="historyList" class="history-grid"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 ShopTrendy. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
